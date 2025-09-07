@@ -1,4 +1,3 @@
-
 services:
   playlistdl:
     image: tanner23456/playlistdl:v2
@@ -9,7 +8,7 @@ services:
         #Direct Server Download
         - ADMIN_USERNAME=admin #Insert unique username here!
         - ADMIN_PASSWORD=password #Insert unique password here!
-      
+      - ALLOW_CODE=code  # 在这里设置您的访问码
       - AUDIO_DOWNLOAD_PATH=${AUDIO_DOWNLOAD_PATH}  # Use the env variable
       - CLEANUP_INTERVAL=300  # Optional
     volumes:

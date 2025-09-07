@@ -1,3 +1,14 @@
+// Check for allow_code_session cookie on page load
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+if (!getCookie('allow_code_session')) {
+    window.location.href = 'login.html';
+}
+
 console.log("Script loaded"); // Add this line at the beginning of script.js
 
 async function download() {

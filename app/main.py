@@ -13,11 +13,22 @@ BASE_DOWNLOAD_FOLDER = '/app/downloads'
 AUDIO_DOWNLOAD_PATH = os.getenv('AUDIO_DOWNLOAD_PATH', BASE_DOWNLOAD_FOLDER)
 ADMIN_USERNAME = os.getenv('ADMIN_USERNAME')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
+ALLOW_CODE = os.getenv('ALLOW_CODE') # Add ALLOW_CODE
 ADMIN_DOWNLOAD_PATH = AUDIO_DOWNLOAD_PATH  # default to .env path
 
 sessions = {}
 
 os.makedirs(BASE_DOWNLOAD_FOLDER, exist_ok=True)
+
+@app.route('/allow_code_auth', methods=['POST'])
+def allow_code_auth():
+    data = request.get_json()
+    allow_code = data.get('allow_code')
+    if allow_code == ALLOW_CODE:
+        response = jsonify({"success": True})
+        response.set_cookie('allow_code_session', 'true') # Set a new session cookie for ALLOW_CODE
+        return response
+    return jsonify({"success": False, "message": "Invalid ALLOW CODE"}), 401
 
 @app.route('/')
 def serve_index():
